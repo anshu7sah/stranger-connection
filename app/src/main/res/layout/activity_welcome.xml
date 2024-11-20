@@ -11,6 +11,7 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/green"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +27,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.72"
+        app:layout_constraintVertical_bias="0.62"
         app:srcCompat="@drawable/logo" />
 
     <TextView
@@ -45,17 +46,23 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto"
-        android:text="Talk with Random People from all around the globe."
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/roboto_light"
+        android:gravity="center"
+        android:text="Talk with Random People \nfrom all around the globe.\nMake new friends and have fun."
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/textView"
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/getStarted"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/green"
+        android:paddingLeft="60dp"
+        android:paddingRight="60dp"
         android:text="Get Started"
         app:cornerRadius="@null"
         app:layout_constraintEnd_toEndOf="@+id/textView2"
