@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
     <ImageView
         android:id="@+id/imageView4"
@@ -89,7 +89,7 @@
         android:id="@+id/lottieAnimationView"
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView5"
@@ -98,6 +98,7 @@
         app:lottie_rawRes="@raw/radar" />
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profilePicture"
         android:layout_width="72dp"
         android:layout_height="72dp"
         android:src="@drawable/demo_user"
