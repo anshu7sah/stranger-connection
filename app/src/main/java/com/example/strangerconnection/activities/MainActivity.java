@@ -1,6 +1,9 @@
 package com.example.strangerconnection.activities;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -8,6 +11,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -23,12 +27,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
     FirebaseAuth auth;
     FirebaseDatabase database;
     long coins=0;
+    int requestCode=1;
+
+    String[] permissions=new String[]{Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,12 +77,29 @@ public class MainActivity extends AppCompatActivity {
         binding.findButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(coins>5){
-                    startActivity(new Intent(MainActivity.this,ConnectingActivity.class));
+                if(isPermissionGranted()){
+                    if(coins>5){
+                        startActivity(new Intent(MainActivity.this,ConnectingActivity.class));
+                    }else{
+                        Toast.makeText(MainActivity.this, "Insufficient Coins", Toast.LENGTH_SHORT).show();
+                    }
                 }else{
-                    Toast.makeText(MainActivity.this, "Insufficient Coins", Toast.LENGTH_SHORT).show();
+                    askPermissions();
                 }
             }
         });
+    }
+
+    void askPermissions(){
+        ActivityCompat.requestPermissions(this,permissions,requestCode);
+    }
+
+    boolean isPermissionGranted(){
+        for(String permission:permissions){
+                if(ActivityCompat.checkSelfPermission(  this,permission)!= PackageManager.PERMISSION_GRANTED){
+                    return false;
+                }
+        }
+        return true;
     }
 }

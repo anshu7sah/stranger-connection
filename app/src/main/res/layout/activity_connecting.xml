@@ -9,6 +9,7 @@
     tools:context=".activities.ConnectingActivity">
 
     <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottieAnimationView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -18,5 +19,15 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/matching_animation" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="108dp"
+        android:layout_height="108dp"
+        android:src="@drawable/demo_user"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/lottieAnimationView3"
+        app:layout_constraintStart_toStartOf="@+id/lottieAnimationView3"
+        app:layout_constraintTop_toTopOf="@+id/lottieAnimationView3"
+        app:layout_constraintVertical_bias="0.53" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
