@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     long coins=0;
     int requestCode=1;
 
+    User user;
     String[] permissions=new String[]{Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO};
 
     @Override
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                                 .addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        User user=snapshot.getValue(User.class);
+                                        user=snapshot.getValue(User.class);
                                         coins=user.getCoins();
                                         binding.coins.setText("You have: "+coins);
                                         Glide.with(MainActivity.this).load(user.getProfile()).into(binding.profilePicture);
@@ -79,7 +80,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(isPermissionGranted()){
                     if(coins>5){
-                        startActivity(new Intent(MainActivity.this,ConnectingActivity.class));
+                        Intent intent=new Intent(MainActivity.this,ConnectingActivity.class);
+                        intent.putExtra("profile",user.getProfile());
+                        startActivity(intent);
+//                        startActivity(new Intent(MainActivity.this,ConnectingActivity.class));
                     }else{
                         Toast.makeText(MainActivity.this, "Insufficient Coins", Toast.LENGTH_SHORT).show();
                     }
