@@ -93,6 +93,12 @@ public class CallActivity extends AppCompatActivity {
                 }
             }
         });
+        binding.endCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     void setupWebView(){
@@ -125,6 +131,9 @@ public class CallActivity extends AppCompatActivity {
         uniqueId=generateUniqueId();
         callJavascriptFunction("javascript:init(\""+uniqueId+"\")");
         if(createdBy.equalsIgnoreCase(username)){
+            if(pageExit){
+                return;
+            }
             firebaseRef.child(username).child("connId").setValue(uniqueId);
             firebaseRef.child(username).child("isAvailable").setValue(true);
 
@@ -229,6 +238,14 @@ public class CallActivity extends AppCompatActivity {
     }
     String generateUniqueId(){
         return UUID.randomUUID().toString();
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        pageExit=true;
+        firebaseRef.child(createdBy).setValue(null);
+        finish();
     }
 
 }

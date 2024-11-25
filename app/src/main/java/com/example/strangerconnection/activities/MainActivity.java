@@ -80,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(isPermissionGranted()){
                     if(coins>5){
+                        coins=coins-5;
+                        database.getReference().child("profiles").child(currentUser.getUid())
+                                .child("coins").setValue(coins);
                         Intent intent=new Intent(MainActivity.this,ConnectingActivity.class);
                         intent.putExtra("profile",user.getProfile());
                         startActivity(intent);
