@@ -27,6 +27,7 @@ public class ConnectingActivity extends AppCompatActivity {
     ActivityConnectingBinding binding;
     FirebaseAuth auth;
     FirebaseDatabase database;
+    boolean isOk=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class ConnectingActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.getChildrenCount()>0){
+                            isOk=true;
                             for(DataSnapshot childsnap:snapshot.getChildren()){
                                 database.getReference().child("users")
                                         .child(childsnap.getKey())
@@ -73,6 +75,7 @@ public class ConnectingActivity extends AppCompatActivity {
                                 intent.putExtra("createdBy",createdBy);
                                 intent.putExtra("isAvailable",isAvailable);
                                 startActivity(intent);
+                                finish();
                             }
                         }else{
                             //not available
@@ -94,7 +97,12 @@ public class ConnectingActivity extends AppCompatActivity {
                                                         @Override
                                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                             if(snapshot.child("status").exists()){
+
                                                                 if(snapshot.child("status").getValue((Integer.class))==1){
+                                                                    if(isOk){
+                                                                        return;
+                                                                    }
+                                                                    isOk=true;
                                                                     String incoming=snapshot.child("incoming").getValue(String.class);
                                                                     String createdBy=snapshot.child("createdBy").getValue(String.class);
                                                                     boolean isAvailable=snapshot.child("isAvailable").getValue(Boolean.class);
@@ -104,6 +112,7 @@ public class ConnectingActivity extends AppCompatActivity {
                                                                     intent.putExtra("createdBy",createdBy);
                                                                     intent.putExtra("isAvailable",isAvailable);
                                                                     startActivity(intent);
+                                                                    finish();
                                                                 }
                                                             }
                                                         }
