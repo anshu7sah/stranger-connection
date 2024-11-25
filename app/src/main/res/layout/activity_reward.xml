@@ -143,6 +143,7 @@
             android:textSize="20sp" />
 
         <ImageView
+            android:id="@+id/video2Icon"
             android:layout_width="24dp"
             android:layout_height="24dp"
             app:srcCompat="@drawable/youtube" />
@@ -178,6 +179,7 @@
             android:textSize="20sp" />
 
         <ImageView
+            android:id="@+id/video3Icon"
             android:layout_width="24dp"
             android:layout_height="24dp"
             app:srcCompat="@drawable/youtube" />
@@ -213,6 +215,7 @@
             android:textSize="20sp" />
 
         <ImageView
+            android:id="@+id/video4Icon"
             android:layout_width="24dp"
             android:layout_height="24dp"
             app:srcCompat="@drawable/youtube" />
@@ -248,6 +251,7 @@
             android:textSize="20sp" />
 
         <ImageView
+            android:id="@+id/video5Icon"
             android:layout_width="24dp"
             android:layout_height="24dp"
             app:srcCompat="@drawable/youtube" />

@@ -3,6 +3,7 @@ package com.example.strangerconnection.activities;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -64,23 +65,11 @@ public class RewardActivity extends AppCompatActivity {
                         });
 
 
-        binding.video1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (rewardedAd != null) {
-                    Activity activityContext = RewardActivity.this;
-                    rewardedAd.show(activityContext, new OnUserEarnedRewardListener() {
-                        @Override
-                        public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
-                            // Handle the reward.
-                            int rewardAmount = rewardItem.getAmount();
-                            String rewardType = rewardItem.getType();
-                        }
-                    });
-                } else {
-                }
-            }
-        });
+        setupVideoAd(binding.video1, 200, binding.video1Icon);
+        setupVideoAd(binding.video2, 300, binding.video2Icon);
+        setupVideoAd(binding.video3, 400, binding.video3Icon);
+        setupVideoAd(binding.video4, 500, binding.video4Icon);
+        setupVideoAd(binding.video5, 1000, binding.video5Icon);
     }
 
     void loadAds(){
@@ -101,4 +90,31 @@ public class RewardActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    private void setupVideoAd(View button, int reward, ImageView icon) {
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (rewardedAd != null) {
+                    Activity activityContext = RewardActivity.this;
+                    rewardedAd.show(activityContext, new OnUserEarnedRewardListener() {
+                        @Override
+                        public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
+
+                            loadAds();
+                            coins += reward;
+                            database.getReference().child("profiles")
+                                    .child(currentUid)
+                                    .child("coins")
+                                    .setValue(coins);
+                            icon.setImageResource(R.drawable.check);
+                        }
+                    });
+                } else {
+                    // Optional: Handle the case when the ad is not loaded yet.
+                }
+            }
+        });
     }
+
+}
