@@ -21,7 +21,7 @@
         app:lottie_rawRes="@raw/matching_animation" />
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile"
+        android:id="@+id/friendProfile"
         android:layout_width="108dp"
         android:layout_height="108dp"
         android:src="@drawable/demo_user"

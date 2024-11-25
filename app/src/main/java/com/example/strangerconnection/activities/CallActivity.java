@@ -16,9 +16,11 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.bumptech.glide.Glide;
 import com.example.strangerconnection.R;
 import com.example.strangerconnection.databinding.ActivityCallBinding;
 import com.example.strangerconnection.models.InterfaceJava;
+import com.example.strangerconnection.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -58,10 +60,12 @@ public class CallActivity extends AppCompatActivity {
         username=getIntent().getStringExtra("username");
         String incoming=getIntent().getStringExtra("incoming");
         createdBy=getIntent().getStringExtra("createdBy");
-        friendsUsername="";
-        if(incoming.equalsIgnoreCase(friendsUsername)){
-            friendsUsername=incoming;
-        }
+//        friendsUsername="";
+//        if(incoming.equalsIgnoreCase(friendsUsername)){
+//            friendsUsername=incoming;
+//        }
+        friendsUsername=incoming;
+
         setupWebView();
 
         binding.micBtn.setOnClickListener(new View.OnClickListener() {
@@ -126,12 +130,42 @@ public class CallActivity extends AppCompatActivity {
 
             binding.loadingGroup.setVisibility(View.GONE);
             binding.controls.setVisibility(View.VISIBLE);
+
+            FirebaseDatabase.getInstance().getReference().child("profiles").child(friendsUsername).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    User user=snapshot.getValue(User.class);
+                    Glide.with(CallActivity.this).load(user.getProfile()).into(binding.friendProfile);
+                    binding.friendName.setText(user.getName());
+                    binding.friendCity.setText(user.getCity());
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }else{
             new Handler().postDelayed(new Runnable() {
 
                 @Override
                 public void run() {
                     friendsUsername=createdBy;
+                    FirebaseDatabase.getInstance().getReference().child("profiles").child(friendsUsername).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            User user=snapshot.getValue(User.class);
+                            Glide.with(CallActivity.this).load(user.getProfile()).into(binding.friendProfile);
+                            binding.friendName.setText(user.getName());
+                            binding.friendCity.setText(user.getCity());
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
                     FirebaseDatabase.getInstance().getReference().child("users")
                             .child(friendsUsername)
                             .child("connId")

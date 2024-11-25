@@ -57,6 +57,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/friendProfile"
             android:layout_width="42dp"
             android:layout_height="42dp"
             android:layout_marginLeft="5dp"
@@ -71,7 +72,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/friendName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_light"
@@ -80,7 +81,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/friendCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_light"
@@ -124,6 +125,7 @@
         android:id="@+id/loadingGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="connectingImage,connectingAnimation" />
+        app:constraint_referenced_ids="connectingImage,connectingAnimation"
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
