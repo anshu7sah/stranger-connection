@@ -20,12 +20,16 @@ import com.bumptech.glide.Glide;
 import com.example.strangerconnection.R;
 import com.example.strangerconnection.databinding.ActivityMainBinding;
 import com.example.strangerconnection.models.User;
+
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,12 +45,22 @@ public class MainActivity extends AppCompatActivity {
     User user;
     String[] permissions=new String[]{Manifest.permission.CAMERA,Manifest.permission.RECORD_AUDIO};
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding=ActivityMainBinding.inflate((getLayoutInflater()));
         EdgeToEdge.enable(this);
         setContentView(binding.getRoot());
+
+        new Thread(
+                () -> {
+                    // Initialize the Google Mobile Ads SDK on a background thread.
+                    MobileAds.initialize(this, initializationStatus -> {});
+                })
+                .start();
+
 
         auth=FirebaseAuth.getInstance();
         database=FirebaseDatabase.getInstance();
@@ -93,6 +107,13 @@ public class MainActivity extends AppCompatActivity {
                 }else{
                     askPermissions();
                 }
+            }
+        });
+
+        binding.rewardBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,RewardActivity.class));
             }
         });
     }
